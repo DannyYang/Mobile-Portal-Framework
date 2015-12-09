@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<applications> 
+    
+    <application>
+		<id>MAPP001070</id>
+		<name>危機值回覆</name>
+		<imgUri>images/b01.png</imgUri>
+	</application>
+    
+</applications>

@@ -1,0 +1,22 @@
+<div data-role="page" id="MAPP001070" class="App_bgimg">
+	<!--header-->
+	<div data-theme="a" data-role="header" data-position="fixed"
+		data-tap-toggle="false" class="ui-header ui-header-a">
+		<a id="headerFlow" class="ui-btn-left">back</a>
+		<h1 id="headerTitle"><span>Demo</span></h1>
+	</div>
+	
+	<!--content-->
+	<div data-role="content" data-position="top">
+		 你一共點擊：<label id="clickTimesLabel"></label>次 <br>
+		<input type="button" id="clickMeBtn" value="點我吧"></input>
+		<input type="button" id="goNextBtn" value="goNext"></input>
+	</div>
+	
+	<!--footer-->
+	<div style="width: 99%;" data-role="footer" data-theme="b"
+		data-position="fixed" data-tap-toggle="false">
+	</div>
+</div>
+
+       

@@ -1,0 +1,14 @@
+<div data-role="page" id="IndexAppsPage" data-dom-cache="true" class="body-bg">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+	首頁
+	</div>
+	<div data-role="main" class="ui-content">
+		<ul id="indexApps" class="menu">
+		</ul>
+	</div>
+
+	<div data-role="footer" data-position="fixed">
+		<ul id="indexApps" class="menu">
+		</ul>
+	</div>
+</div>

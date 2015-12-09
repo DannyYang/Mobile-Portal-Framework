@@ -1,0 +1,306 @@
+/*
+ * Mobile Portal Framework Core
+ * */
+var CORE={
+		// 套件的版本編號
+		version : "0.0.1",
+		// 對應SVN的revision編號
+		revision : "2015/01/27",
+		// 版本說明
+		msg : "Mobile Portal Framework Common Data Object.",
+		// 最後修改者
+		author : 'Danny',
+		//設定系統預設的source name, 這是給WebSrvice檢查用的
+		source : 'MMOBILE',
+		//設定系統預設的URL, 呼叫WebSrvice用的
+		serverUrl : '',
+		//網路是否連線
+		isNetOnline : false,
+		//設定當前的APP ID
+		currentApp : '',
+		//設定當前的APP物件
+		currentView : {},
+		//提供MAPP共通使用的session空間
+		session : {},
+		//紀錄由app.xml裡讀入的APPS設定.
+		apps :{
+			map:{},
+			put: function(appid, obj) {
+				obj.goIndex=new Function(appid+'.goIndex()');
+				this.map[appid] = obj;
+			},
+			get : function(appid) {
+				return this.map[appid];
+			},
+			getName : function(appid) {
+				return this.map[appid] ? this.map[appid].name : undefined;
+			},
+			getImgUri : function(appid) {
+				return this.map[appid] ? this.map[appid].imgUri : undefined;
+			},
+			getBadge : function(appid) {
+				return this.map[appid] ? this.map[appid].badge : undefined;
+			},
+			setBadge : function(appid, badge) {
+				if( badge == 0 ) {
+					this.map[appid].badge = "" ;
+				}
+				else {
+					this.map[appid].badge = badge ;
+				}
+			},
+			clear : function() {
+				this.map = {};
+			}
+		},
+	
+		/*******************************************************************************
+		 * 從占存檔中取得User登入的資訊. 避免從背景回前景時要重新登入.
+		 ******************************************************************************/
+		loadCacheUserInfo:function(){
+			// TODO: 讀取常用檔案之cache
+			console.log("[loadCacheUserInfo]");
+//			CORE.setCoreData("testUID", "testPass", "127.0.0.1", "testBody");
+		},
+		
+		/*******************************************************************************
+		 * 將登入資訊寫到相關環境變數裡及暫存擋裡.
+		 ******************************************************************************/
+		setCacheUserInfo:function(){
+			// TODO: 暫存常用檔案cache
+			console.log("[setCacheUserInfo]");
+		},
+				
+		/*******************************************************************************
+		 * 登出or關閉APP時清除User登入的資訊
+		  ******************************************************************************/
+		clearCacheUserInfo:function(){	
+			$.MPF.uid=undefined;
+			$.MPF.pass=undefined;
+			for( var appId in CORE.apps.map )
+				CORE.apps.setBadge(appId, "") ;
+//			$.MPF.userProfile = undefined;
+			console.log("[clearCacheUserInfo]");
+		},
+		
+		/*******************************************************************************
+		 * 調整手機滑動時的靈敏度
+		 * 下面的意思是：1500ms內要滑動15px
+		 * px的實績距離會因各家產牌手機的不
+		 * 而有不同，例如較早期的型號px點間距比較大，所以要滑動的實際距離
+		 * 也會比較大。但新型手機px點較密，實際的滑動距離就會比較小。
+		 ******************************************************************************/
+		modifySensitivity:function(duration,horizontalDistance) {
+			$.event.special.swipe.durationThreshold = duration;
+			$.event.special.swipe.horizontalDistanceThreshold = horizontalDistance;
+		},
+		
+		/*******************************************************************************
+		 * 從config/apps.xml檔中讀入所有APPs的設定
+		 ******************************************************************************/
+		loadApps:function(){
+			$.ajax({
+				url: 'config/apps.xml', 
+				async: false,
+				success : function(xml) {
+					var appList = $.xml2json(xml);
+					MPF_LOG.debug(JSON.stringify(appList));
+					if( Object.prototype.toString.call(appList.application) === "[object Array]" ) {
+                        for ( var i = 0, max = appList.application.length; i < max; i++) {
+    						CORE.apps.put(appList.application[i].id, appList.application[i]);
+    					}
+					} else {
+                         CORE.apps.put(appList.application.id, appList.application);
+					}
+				}
+			});
+		},
+		
+		/*******************************************************************************
+		 * 載入系統資訊到$.MPF裡.
+		 ******************************************************************************/
+		loadEnv:function(){
+			$.MPF.source=CORE.source;
+			$.MPF.serverUrl=CORE.serverUrl;
+			$.MPF.env = WL.Client.getEnvironment();
+			if (WL.Client.getEnvironment() == WL.Environment.ANDROID
+					|| WL.Client.getEnvironment() == WL.Environment.IPHONE
+					|| WL.Client.getEnvironment() == WL.Environment.PREVIEW) {
+				$.MPF.host = $.mobile.path.get(location.href)?$.mobile.path.get(location.href):"";
+			}else{
+				//Get the domain name for web browsers.
+				$.MPF.host = "";
+			}
+		},
+		/*******************************************************************************
+		 * 配置PushNotification資訊到$.MPF裡.
+		 ******************************************************************************/
+		setPushNotifcation:function(){
+			// 初始化推播物件
+			$.MPF.pushNotification = window.plugins.pushNotification;
+			
+			if (WL.Client.getEnvironment() == WL.Environment.ANDROID){
+				$.MPF.pushNotification.register(
+					MPF_NOTIFICATION.GCM.callSuccessHandler,
+					MPF_NOTIFICATION.GCM.errorHandler,
+				    {
+				        "senderID":"474929652491",
+				        "ecb":"MPF_NOTIFICATION.GCM.ecbHandler"
+				    }
+				);
+			} else if(WL.Client.getEnvironment() == WL.Environment.IPHONE) {
+				$.MPF.pushNotification.register(
+					MPF_NOTIFICATION.APNS.onTokenReceive,
+					MPF_NOTIFICATION.APNS.errorHandler,
+				    {
+				        "badge":"true",
+				        "sound":"true",
+				        "alert":"true",
+				        "ecb":"MPF_NOTIFICATION.APNS.ecbHandler"
+				    }
+			    );
+			}
+			
+		},
+		/*******************************************************************************
+		 * Wrap $.mobile.changePage function. 
+		 ******************************************************************************/
+		goPage: function(url, options){
+			if(options){
+				$.mobile.changePage($.MPF.host+url, options);
+			}else{
+				if($.MPF.env==WL.Environment.IPHONE || $.MPF.env==WL.Environment.IPAD || $.MPF.env == WL.Environment.PREVIEW){
+					$.mobile.changePage($.MPF.host+url, {
+						transition: "none",
+						showLoadMsg: false
+					});	
+				}else{
+					$.mobile.changePage($.MPF.host+url, {
+						transition: "none",
+						showLoadMsg: false
+					});	
+				}
+			}
+		},
+		
+		/**
+		 * 透過傳入的appid去執行他的goIndex函數(啓動MAPP). 
+		 */
+		goIndex: function(appId){
+			if(appId){
+				DLJFM.callObjMethodAndDynamicLoadJsFile(DLJFM.JsFileTable[appId], function(obj){
+	    			obj.goIndex();
+	    		});
+				// this.apps.get(appId).goIndex();
+			}
+		},
+		
+		/**
+		 * 顯示‘啓動中’的過場畫面
+		 */
+		showLoading:function(msg){
+			$.mobile.loading('show', {
+				text : msg,
+				textVisible : true,
+				textonly : true,
+				theme : 'a'
+			});
+		},
+		
+		/**
+		 * 關閉‘啓動中’的過場畫面
+		 */
+		closeLoading:function(){
+			$.mobile.loading( "hide" );
+		},
+		
+		/**
+		 * 顯示底部Menu
+		 * 
+		 */
+		mPortalResetMenu:function() {
+			var mAppFooter = $(':jqmData(role=footer):not([data-id=main])'); 
+			if(mAppFooter.css('display') == 'none') {
+				mAppFooter.show();
+				MPF_LOG.debug('show current mApp footer');
+			} else {
+				mAppFooter.hide();
+				MPF_LOG.debug('hide current mApp footer');
+			}
+		},
+		
+		/**
+		 * 取得直立或是橫躺
+		 */
+		getMobileMode:function() {
+		    MPF_LOG.debug("start ==> getMobileMode()");  
+		    var mode = "";
+		    if(window.orientation!=undefined) {
+		    	MPF_LOG.debug('window.orientation :' + window.orientation);
+		    	mode = Math.abs(window.orientation) == 90 ? "landscape" : "portrait";
+		    	MPF_LOG.debug("[used orientation] mobile mode : " + mode + ' orientation:'+Math.abs(window.orientation));
+		    } else {
+		    	mode = (window.innerHeight < window.innerWidth)? "landscape" : "portrait";
+		    	MPF_LOG.debug("[used Length] mobile mode : " + mode +" H:"+window.innerHeight+" W:"+window.innerWidth);
+		    } 
+		    MPF_LOG.debug("end ==> getMobileMode()");
+		    return mode;
+		},
+		
+		/**
+		 * 將環境的基本資料寫到$.MPF裡．
+		 */
+		setCoreData : function(_uid,_pass, _IP, body){
+			$.MPF.uid=_uid;
+			$.MPF.pass=_pass;
+			$.MPF.ip = _IP;
+			$.MPF.userProfile = {"index":null,"favorites":[],"app_seq":["MAPP001065","MAPP001070","MAPP001075"]};
+		},
+		
+		/*******************************************************************************
+		 * 提供統一的WL.SimpleDialog處理．
+		 ******************************************************************************/
+		Dialog : function(title,text,buttons){
+			WL.SimpleDialog.show(title, text,buttons);
+		},
+		
+		/*******************************************************************************
+		 * 清理暫存擋及登出．
+		 ******************************************************************************/
+		exit : function(){
+			CORE.closeLoading();
+			
+			if(appNodeFlow.nodeLst.length > 0){
+				$.mobile.activePage.find("#headerFlow").trigger('click');				
+			}
+			else{
+				CORE.Dialog('提示', '是否離開程式?', [ {
+					text : '離開',
+					handler : function() {
+						LOGIN.goIndex({close:true});
+					}
+				}, {
+					text : '取消',
+					handler : function() {
+						//  Do nothing here.
+					}
+				}]);
+			}
+		},
+		
+		/*******************************************************************************
+		 * 將傳入的_appId設定為MPF的首頁．
+		 ******************************************************************************/
+		setIndex:function(_appId){
+			console.log("[setIndex]");
+		},
+	
+		/*******************************************************************************
+		 * 啓動傳入的appId的程式．
+		 ******************************************************************************/
+		toApp:function(appObj){
+			var app=CORE.apps.get(appObj.id);
+			CORE.showLoading(app.name+"啓動中...");
+			CORE.goIndex(appObj.id);
+		}		
+};

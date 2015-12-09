@@ -1,0 +1,86 @@
+<!DOCTYPE HTML><html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mobile Portal Framework Startup</title>
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
+        <link href="worklight/worklight.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/alertify.core.css" rel="stylesheet">
+        <link href="css/alertify.default.css" rel="stylesheet">
+        <link href="css/jquery.mobile-1.4.5.min.css" rel="stylesheet">
+        <link href="css/framework7.ios.min.css" rel="stylesheet">
+    <!-- use jquery to replace 'WLJQ' -->
+        <script>
+		// Define WL namespace.
+		var WL = WL ? WL : {};
+		/**
+		 * WLClient configuration variables.
+		 * Values are injected by the deployer that packs the gadget.
+		 */
+		 WL.StaticAppProps = {
+   "APP_DISPLAY_NAME": "demo",
+   "APP_ID": "demo",
+   "APP_SERVICES_URL": "\/apps\/services\/",
+   "APP_VERSION": "1.0",
+   "ENVIRONMENT": "android",
+   "LOGIN_DISPLAY_TYPE": "embedded",
+   "WORKLIGHT_NATIVE_VERSION": "3641188782",
+   "WORKLIGHT_PLATFORM_VERSION": "7.1.0.0",
+   "WORKLIGHT_ROOT_URL": "\/apps\/services\/api\/demo\/android\/"
+};
+</script>
+		<script src="worklight/cordova.js"></script>
+		<script src="worklight/wljq.js"></script>
+		<script src="worklight/worklight.js"></script>
+		<script src="worklight/checksum.js"></script>
+		<script src="worklight/jsonstore.js"></script>
+		<script src="js/lib/jquery.js"></script>
+    <script src="js/lib/jquery-ui.js"></script>
+    <!-- jquery mobile js -->
+    <script src="js/lib/jquery.mobile-1.4.5.min.js"></script>
+    <!-- jquery ui plugins -->
+    <script src="js/lib/jquery.ui.touch-punch.js"></script>
+    <!-- jquery alert js -->
+    <script src="js/lib/alertify.js"></script>
+    <!-- jquery parse url plugin -->
+    <script src="js/lib/purl.js"></script>
+    <!-- jquery dateFormate plugin -->
+    <script src="js/lib/jquery.dateFormat-1.0.js"></script>
+    <!-- jquery util xml to json  -->
+    <script src="js/lib/jquery.xml2json.js"></script>
+    <!-- jquery block ui plugin -->
+    <script src="js/lib/jquery-blockUI.js"></script>
+    <!-- Add MPF CORE JS Files -->
+    <script src="js/core/MPF.core.js"></script>
+    <script src="js/core/MPF.core.channel.js"></script>
+    <script src="js/core/MPF.ui.util.js"></script>
+    <!-- Add ML IO JS Files -->
+    <script src="js/core/io/MPF.ajax.mobile.js"></script>
+    <!-- Add MPF EVENT JS Files -->
+    <script src="js/core/MPF.wl.event.js"></script>
+    <!-- Add NodeFlowControl -->
+    <script src="js/core/NodeFlowControl.js"></script>
+    <!-- Add ML dataTranfer JS Files -->
+    <script src="js/core/datatransfer/MPF.dataTransfer.AUTH.js"></script>
+    <!-- Add MOBILE_PORTAL CORES JS Files -->
+    <script src="js/Core.js"></script>
+    <script src="js/core/dialog/js/MPF_Dialog.js"></script>
+    <!-- Add Cordova Plugins -->
+    <!--<script src="js/plugins/PushNotification.js"></script>-->
+    <script src="js/lib/jsrender.min.js"></script>
+    <script src="js/lib/fastclick.js"></script>
+	<script src="js/lib/spin.js"></script>
+	<script src="js/lib/framework7.min.js"></script>
+    <script src="js/core/dynamicLoadJsFileManager.js"></script>
+    <script src="js/plugin/barcodescanner.js"></script>
+    </head>
+    <body style="display: none;">
+        <script src="js/core/login/js/Login.js"></script>
+    <script src="js/core/main/js/IndexApps.js"></script>
+        <div data-role="page">
+        </div>
+        <script src="js/initOptions.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/messages.js"></script>
+    </body>
+</html>

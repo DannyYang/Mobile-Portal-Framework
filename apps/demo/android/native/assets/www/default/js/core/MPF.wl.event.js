@@ -1,0 +1,257 @@
+
+/* JavaScript content from js/core/MPF.wl.event.js in folder common */
+/**
+* 負責處理個別View的格類註冊事件
+**/
+(function($) {
+	
+	var pauseMap={}, resumeMap={}, stopMap={}, onLineMap={}, offlineMap={}, orientationMap={}, resizeMap={}, loginMap={}, logoutMap={};
+	var pauseAllMap={}, resumeAllMap={}, stopAllMap={}, onLineAllMap={}, offlineAllMap={}, orientationAllMap={}, resizeAllMap={}, loginAllMap={}, logoutAllMap={};
+		
+	var defaultOpt={
+			type : undefined,
+			name : undefined,
+			all : false,
+			handler : function(options) {
+				MPF_LOG.info("Default event handler! ",JSON.stringify(options));
+			}
+		};
+	
+	MPF_EVENT.set({
+		// 套件的版本編號
+		version : "0.0.1",
+		// 對應SVN的revision編號
+		revision : "2015/01/27",
+		// 版本說明
+		msg : "Default Worklight EVENT Plugin",
+		name : MPF_EVENT.env.name,
+		// 最後修改者
+		author : 'Danny',
+		register : function(option) {
+			MPF_LOG.trace("CALL EVENT PLUGIN OPT: ",JSON.stringify(option));
+			var _options = $.extend({}, defaultOpt, option);
+			MPF_LOG.trace("EVENT PLUGIN EXTEND OPT: ",JSON.stringify(_options));
+			if(_options.type && funcList[_options.type]){
+				if(_options.name){
+					funcList[_options.type](_options);
+				}else{
+					throw "傳入的EVENT未設定NAME!";
+				}
+			}else{
+				throw "未傳入EVENT Type!";
+			}
+		}
+	});
+	
+	/**
+	 * 功能列表
+	 */
+	var funcList = {
+		//當系統進入背景時執行相關CALL-BACK
+		PAUSE : function(options) {
+			if(options.all && options.all===true){
+				pauseAllMap[options.name]=options;
+			}else{
+				pauseMap[options.name]=options;
+			}
+		},
+		
+		//當系統進入前景時執行相關CALL-BACK
+		RESUME : function(options) {
+			if(options.all && options.all===true){
+				resumeAllMap[options.name]=options;
+			}else{
+				resumeMap[options.name]=options;
+			}
+		},
+		
+		//當系統要關閉時執行相關CALL-BACK
+		STOP : function(options){
+			if(options.all && options.all===true){
+				stopAllMap[options.name]=options;
+			}else{
+				stopMap[options.name]=options;
+			}
+		},
+		
+		//當系統網路連線時執行相關CALL-BACK
+		ONLINE : function(options){
+			if(options.all && options.all===true){
+				onLineAllMap[options.name]=options;
+			}else{
+				onLineMap[options.name]=options;
+			}
+		},
+		
+		//當系統網路斷線時執行相關CALL-BACK
+		OFFLINE : function(options){
+			if(options.all && options.all===true){
+				offlineAllMap[options.name]=options;
+			}else{
+				offlineMap[options.name]=options;
+			}
+		},
+		
+		//當手機旋轉切換時執行相關CALL-BACK
+		ORIENTATION:function(options){
+			if(options.all && options.all===true){
+				orientationAllMap[options.name]=options;
+			}else{
+				orientationMap[options.name]=options;
+			}
+		},
+		
+		//當視窗大小改變時執行相關CALL-BACK
+		RESIZE:function(options){
+			if(options.all && options.all===true){
+				resizeAllMap[options.name]=options;
+			}else{
+				resizeMap[options.name]=options;
+			}
+		},
+		
+		LOGIN:function(options){
+			if(options.all && options.all===true){
+				loginAllMap[options.name]=options;
+			}else{
+				loginMap[options.name]=options;
+			}
+		},
+		
+		LOGOUT:function(options){
+			if(options.all && options.all===true){
+				logoutAllMap[options.name]=options;
+			}else{
+				logoutMap[options.name]=options;
+			}
+		},
+	};
+	
+	MPF_EVENT.onLogin=function(){
+		MPF_LOG.debug('onLogin....');
+		for(var i in loginAllMap){
+			if(loginAllMap[i].handler){
+				loginAllMap[i].handler();
+			}
+		}
+		var tmp=loginMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+	};
+	
+	MPF_EVENT.onLogout=function(){
+		MPF_LOG.debug('onLogout....');
+		for(var i in logoutAllMap){
+			if(logoutAllMap[i].handler){
+				logoutAllMap[i].handler();
+			}
+		}
+		var tmp=logoutMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+	};
+	
+	var onPuse=function(){
+		for(var i in pauseAllMap){
+			if(pauseAllMap[i].handler){
+				pauseAllMap[i].handler();
+			}
+		}
+		var tmp=pauseMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+	};
+	
+	var onResume=function(){
+		for(var i in resumeAllMap){
+			if(resumeAllMap[i].handler){
+				resumeAllMap[i].handler();
+			}
+		}
+		var tmp=resumeMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+	};
+	
+	var stop=function(){
+		for(var i in stopAllMap){
+			if(stopAllMap[i].handler){
+				stopAllMap[i].handler();
+			}
+		}
+		var tmp=stopMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+	};
+	
+	var onLine=function(){
+		for(var i in onLineAllMap){
+			if(onLineAllMap[i].handler){
+				onLineAllMap[i].handler();
+			}
+		}
+		var tmp=onLineMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+		CORE.isNetOnline = true;
+	};
+	
+	var offLine=function(){
+		for(var i in offlineAllMap){
+			if(offlineAllMap[i].handler){
+				offlineAllMap[i].handler();
+			}
+		}
+		var tmp=offlineMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+		CORE.isNetOnline = false;
+	};
+	
+	var onOrientation=function(){
+		for(var i in orientationAllMap){
+			if(orientationAllMap[i].handler){
+				orientationAllMap[i].handler();
+			}
+		}
+		var tmp=orientationMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+	};
+	
+	var onResize=function(){		
+		for(var i in resizeAllMap){
+			if(resizeAllMap[i].handler){
+				resizeAllMap[i].handler();
+			}
+		}
+		var tmp=resizeMap[$.MPF.currentId];
+		if(tmp && tmp.handler){
+			tmp.handler();
+		}
+		
+		setTimeout(function(){
+			// alertify
+			var alertTop =  "" + window.innerHeight / 2 - $("#alertify").height() / 2 + "px";
+			$("#alertify").css('top', alertTop);
+			// showloading orientation change position
+			$(".blockMsg").css('top', "" + "" + window.innerHeight / 2 - $(".blockMsg").height() / 2 + "px");
+		}, 300);
+	};
+	
+	//app前背景事件change時,向data層註冊或反註冊interval event for Android、BlackBerry WebWorks (OS 5.0或更高版本)以及IOS
+	document.addEventListener("pause", onPuse, false);
+	document.addEventListener("resume", onResume, false);
+	document.addEventListener("online", onLine, false);
+	document.addEventListener("offline", offLine, false);
+	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", onOrientation, false);
+	window.addEventListener("resize", onResize, false);
+})(jQuery);

@@ -1,0 +1,20 @@
+<div data-role="page" id="IndexAppsPage" data-dom-cache="true" class="body-bg">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false"
+		class="secretaryHeader">
+		<div>
+			<img src="../../../images/Logo_big.jpg" class="logo"></img>
+		</div>
+		<a id="headerFlow" class="go_back"></a> 
+		<a href="Login.html" class="logout" id="headerMenu" onClick="LOGIN.goIndex();"><i class="fa fa-sign-out"></i></a>
+	</div>
+	<div class="secretaryTop_menu" style="text-align:left; padding-top:2px">醫師行動秘書
+		<a href="#" class="My_Patient" style="display:block;">My Patient</a>
+	</div>
+	<div data-role="content" class="">
+    	<div class="secretaryfeatured">
+			<p style="margin: 50px 0 0 0;"><span class="note">您有新病人 6 人</span>，早上2人，下午3人，晚上1人。您今天配合的護士為 柳芳姿。</p>
+			<ul id="indexApps" class="menu">
+			</ul>
+		</div>
+	</div>
+</div>

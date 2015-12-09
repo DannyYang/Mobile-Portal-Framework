@@ -1,0 +1,90 @@
+
+/* JavaScript content from js/core/io/MPF.file.js in folder common */
+/*
+ * 操作檔案的 I/O plugin, 目前系統預設只會存取３個檔案-->TEMP: 存取暫存擋, ROTATE: 存取的檔案會每天清除, PERSISTENCE: 存取的檔案為永久保存．
+ * 檔案資料的格式為key=value的組成方式．
+ * 
+ * */
+(function($) {
+	
+	var defaultOpt={
+		//type: 設定存取的檔案. TEMP: 存取暫存擋, ROTATE: 存取的檔案會每天清除, PERSISTENCE: 存取的檔案為永久保存．
+		type : undefined,
+		//action: 設定檔案的操作. 'READ'(讀擋) or 'WRITE'(寫擋).
+		action : undefined,
+		//append : 設定存擋的方式. true: 代表將資訊append到最後, false:  代表將資訊override.
+		append : true,
+		//傳入的參數, 讀擋時只要傳入key就可以. 寫擋時key及value都要傳入(如果value未設定則代表清除key的資訊).
+		params : {
+			key: undefined,
+			value: undefined
+		},
+		//讀擋時，讀入的資訊會透過SUCCESS的callback function回傳資訊．
+		success : function(obj) {
+			MPF_LOG.info("Default FILE success handler! ",JSON.stringify(obj));
+		},
+		//存取檔案時的任何錯誤都會透過FAIL的callback function回傳資訊．
+		fail : function(obj){ 
+			MPF_LOG.error("Default FILE fail handler! ",JSON.stringify(obj));
+		}	
+	};
+	
+	ML_IO.set({
+		// 套件的版本編號
+		version : "0.0.1",
+		// 對應SVN的revision編號
+		revision : "2015/01/28",
+		// 版本說明
+		msg : "FILE Plugin",
+		name : ML_IO.file.name,
+		// 最後修改者
+		author : 'Danny',
+		send : function(option) {
+			MPF_LOG.trace("CALL FILE PLUGIN OPT: ",JSON.stringify(option));
+			var _options = $.extend({}, defaultOpt, option);
+			if(_options.type && funcList[_options.type]){
+				funcList[_options.type](_options);
+				MPF_LOG.trace("FILE PLUGIN EXTEND OPT: ",JSON.stringify(_options));
+			}else{
+				_options.fail(new ERROR("FILE查無 type : "+_options.type,"MQTT查無 type : "+_options.type));
+			}
+		}
+	});
+	
+	
+	/**
+	 * 功能列表
+	 */
+	var funcList = {
+		// HTML5 localstorage
+		LOCALSTORAGE : function(options){
+			if(options.action && options.action===ML_IO.file.action.READ){
+				if(options.params && options.params.key){
+					options.success(localStorage[options.params.key]);
+					return;
+				}else{
+					throw "LOCALSTORAGE File READ Params ERROR! ";
+				}
+			}else if(options.action && options.action===ML_IO.file.action.RESET){
+				localStorage.clear();
+			}else if(options.action && options.action===ML_IO.file.action.REMOVE){
+				if(options.params && options.params.key){
+					localStorage.removeItem(options.params.key);
+				}else{
+					throw "LOCALSTORAGE File REMOVE Params ERROR! ";
+				}
+			}else if(options.action && options.action===ML_IO.file.action.WRITE){
+				if(options.params && options.params.key && options.params.value){
+					localStorage[options.params.key]=options.params.value;
+					return;
+				}else{
+					throw "LOCALSTORAGE File WRITE Params ERROR! ";
+				}
+			}else{
+				throw "LOCALSTORAGE File action ERROR!";
+			}
+		}
+		
+	};
+
+})(jQuery);

@@ -1,0 +1,58 @@
+
+/* Stylesheet content from css/main.css in folder common */
+html {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.ErrorMsg {
+	color : red;
+}
+
+/*Index*/
+.menu {
+	overflow: hidden;
+	padding: 20px 0 0 0;
+}
+
+.menu li {
+	float: left;
+	width: 33%;
+	text-align: center;
+	margin: 0 0 20px 0;
+	font-size: 16px;
+	font-weight: bolder;
+	position: relative;
+	color: #585858;
+    font-family: Helvetica, "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
+}
+
+.menu li span {
+	background: #F00;
+	color: #FFF;
+	position: absolute;
+	border-radius: 50px;
+	padding: 0 8px;
+	font-weight: normal;
+	font-size: 16px;
+	position: absolute;
+	right: 10%;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.menu li a {
+	display: inline-block;
+}
+
+.menu li img {
+	width: 33%;
+}
+/* Stylesheet content from css/main.css in folder android */
+
+/* this CSS file extends the application CSS file found under common\css */
+
