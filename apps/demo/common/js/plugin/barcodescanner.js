@@ -5,10 +5,6 @@
  * Copyright (c) Matt Kane 2010
  * Copyright (c) 2011, IBM Corporation
  */
-
-
-var exec = require("cordova/exec");
-
 /**
  * Constructor.
  *
@@ -96,7 +92,7 @@ BarcodeScanner.prototype.scan = function (successCallback, errorCallback, config
         return;
     }
 
-    exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', config);
+    cordova.exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', config);
 };
 
 //-------------------------------------------------------------------
@@ -116,10 +112,9 @@ BarcodeScanner.prototype.encode = function (type, data, successCallback, errorCa
         return;
     }
 
-    exec(successCallback, errorCallback, 'BarcodeScanner', 'encode', [
+    cordova.exec(successCallback, errorCallback, 'BarcodeScanner', 'encode', [
         {"type": type, "data": data, "options": options}
     ]);
 };
 
 var barcodeScanner = new BarcodeScanner();
-module.exports = barcodeScanner;

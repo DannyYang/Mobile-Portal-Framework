@@ -4,8 +4,7 @@ var MAPP001001 = {
 	msg : "購屋車", /*頁面說明*/
 	author : "Danny", /*最後修改者*/
 	currentId : "MAPP001001", /*頁面識別代碼*/
-	session : {
-		clickTimes : 0
+	data : {
 	},
 	pointObj : { /*相關指標物件*/
 	},
@@ -39,7 +38,7 @@ $(document).on("pagebeforeshow", "#MAPP001001", function() {
 });
 
 $(document).on("pageshow", "#MAPP001001", function() {
-	appNodeFlow.appendNode(MAPP001001);
+	appNodeFlow.nodeInit(MAPP001001);
 	MAPP001001.init();
 });
 

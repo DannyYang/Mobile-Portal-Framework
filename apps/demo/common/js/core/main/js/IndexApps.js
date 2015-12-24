@@ -75,7 +75,7 @@ $(document).on('pagebeforecreate', '#' + INDEX.currentId, function(event) {
  * 顯示登入畫面前的處理工作
  */
 $(document).on('pagebeforeshow','#' + INDEX.currentId, function(event) {
-	appNodeFlow.appendNode(INDEX);
+	appNodeFlow.nodeInit(INDEX);
 });
 
 $(document).on('pageshow', '#' + INDEX.currentId, function(event) {

@@ -7,10 +7,6 @@
  * Copyright (c) Matt Kane 2010
  * Copyright (c) 2011, IBM Corporation
  */
-
-
-var exec = require("cordova/exec");
-
 /**
  * Constructor.
  *
@@ -124,4 +120,3 @@ BarcodeScanner.prototype.encode = function (type, data, successCallback, errorCa
 };
 
 var barcodeScanner = new BarcodeScanner();
-module.exports = barcodeScanner;

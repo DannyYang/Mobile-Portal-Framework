@@ -29,18 +29,15 @@ appNodeFlow = {
     
     // 調整使用Framework7 Page基本調整
     migrateF7Page: function(mapp){
-    	console.log("migrateF7Page");
-    	console.log(mapp.currentId);
     	var headerHeight = 41;
     	$("#"+mapp.currentId).height($(document).height() - headerHeight);
-    	console.log("height : " + $("#"+mapp.currentId).height());
     },
     
     //在Flow中新增一個節點記錄
-	appendNode : function(obj, callback) {
+	nodeInit : function(obj, callback) {
+		
 		MPF_LOG.debug("appendNode : start");
 
-		
 		if(obj && typeof(obj) != 'object'){
 			MPF_LOG.debug("appNodeFlow Err... : 參數非MAPP物件,無法建立節點");
 		}
@@ -48,15 +45,6 @@ appNodeFlow = {
 			var headerElement = $.mobile.activePage.find("#headerFlow");
 			
 			this.migrateF7Page(obj);
-			
-			if(this.nodeLst.length == 0){
-				// headerElement.attr('.ui-btn-text').text("首頁");
-				// headerElement.attr('src', $.MPF.host + "images/Header_icon_home.png");
-			}
-			else{
-				// headerElement.find('.ui-btn-text').text("離開");
-				// headerElement.attr('src', $.MPF.host + "images/Header_icon_undo.png");
-			}
 			
 			MPF_LOG.debug("the callback is :" + callback);
 			this.nodeLst.push(obj);
@@ -88,7 +76,9 @@ appNodeFlow = {
 						this.nodeCallback.pop();
 						
 						var backNodeObj = this.nodeLst.pop();
-						backNodeObj.goIndex();
+						if(backNodeObj != undefined) {
+							backNodeObj.goIndex();
+						}
 					}
 				}
 				
@@ -99,26 +89,7 @@ appNodeFlow = {
 	//清掉所有的節點記錄
 	//isMenuNode : 是否要連首頁的Node都清掉
 	resetNodes : function(isMenuNode){
-		MPF_LOG.debug("clear flow nodes");		
-		// MPF_LOG.debug( "before clear.......HistotyCount = )" + $.mobile.urlHistory.stack.length);
-		
-		// if($.mobile.urlHistory !== null && $.mobile.urlHistory !== 'undefined'){			
-		// 	while($.mobile.urlHistory.stack.length - 1 > 0){
-		// 		$.mobile.urlHistory.stack.pop();
-		// 		$.mobile.urlHistory.activeIndex--;
-				
-		// 		if($.mobile.urlHistory.stack[$.mobile.urlHistory.stack.length - 1].url.indexOf("/default/core/main/IndexApps.html") > 0){
-		// 			if(isMenuNode){
-		// 				$.mobile.urlHistory.stack.pop();
-		// 				$.mobile.urlHistory.activeIndex--;
-		// 			}
-					
-		// 			break;
-		// 		}
-		// 	}
-		// }
-		
-		// MPF_LOG.debug( "after clear.......HistotyCount = )" + $.mobile.urlHistory.stack.length);
+		MPF_LOG.debug("clear flow nodes");				
 		this.nodeLst = [];
 		this.nodeCallback = [];
 	},
@@ -160,7 +131,7 @@ appNodeFlow = {
 	
 	//頁面跳轉但是維持在目前的歷史節點
 	replaceCurrentNode : function(obj, option){
-		MPF_LOG.debug("...... appNodeFlow ) replaceCurrentNode");
+		MPF_LOG.debug("...... appNodeFlow > replaceCurrentNode");
 		
 		if(obj && typeof(obj) != 'object'){
 			MPF_LOG.debug("appNodeFlow Err... : 參數非MAPP物件,無法建立節點");
@@ -174,6 +145,21 @@ appNodeFlow = {
 				obj.goIndex();
 	    	else
 	    		obj.goIndex(option);
+		}
+	},
+	
+	// 頁面跳轉並新增歷史節點
+	appendNode : function(obj, option) {
+		MPF_LOG.debug("MPF appNodeFlow > appendNode");
+
+		if (typeof (obj) != 'object') {
+			MPF_LOG.debug("appNodeFlow Err... : 參數非MAPP物件,無法建立節點");
+		} else {
+			MPF_LOG.debug(this.nodeLst.toString());
+			if (option === undefined || option === null)
+				obj.goIndex();
+			else
+				obj.goIndex(option);
 		}
 	},
 

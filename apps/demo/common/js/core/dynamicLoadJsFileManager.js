@@ -4,6 +4,7 @@
  */
 DLJFM = {    
 	JsFileTable : {
+		/* 這裡請配置需要動態載入的MAPP物件 */
 		MAPP001070 : {
 			id : "MAPP001070",
     		path : "apps/MAPP001070/js/MAPP001070.js"
@@ -12,7 +13,16 @@ DLJFM = {
 			id : "MAPP001001",
     		path : "apps/MAPP001001/js/MAPP001001.js"
     	},
-    	JQPLOT : {
+    	MAPP001002 : {
+    		id : "MAPP001002",
+    		path : "apps/MAPP001002/js/MAPP001002.js"
+    	},
+    	MAPP001002_1 : {
+    		id : "MAPP001002_1",
+    		path : "apps/MAPP001002/js/MAPP001002_1.js"
+    	}
+    	/* 以下為多重載入的範例 - 以jqplot為例 */
+    	/*JQPLOT : {
     		id : "JQPLOT",
             obj : "$.jqplot", // 物件存取地方
     		path : 
@@ -29,7 +39,7 @@ DLJFM = {
 				"js/jqplot/jqplot.dateAxisRenderer.min.js",
 				"js/jqplot/jqplot.ohlcRenderer.min.js"
     		]
-    	}
+    	}*/
     },
     
     /**
