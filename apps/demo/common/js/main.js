@@ -49,8 +49,9 @@ var MOBILE_PORTAL={
 	 *  override jquery mobile loading method with jquery block ui plugin.
 	 */ 
 	_MPF.overrideJQMLoading=function(){
+		// TODO 目前無法直接使用
 	    var originalLoadingMethod = $.mobile.loading;
-	    console.log("~~~~!!!!~~");
+
 	    try{
 		    $.mobile.loading = function () {
 		    	console.log("call!!");
