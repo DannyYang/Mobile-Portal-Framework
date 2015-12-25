@@ -33,7 +33,6 @@ var MAPP001001 = {
 })(MAPP001001);
 
 $(document).on("pagebeforeshow", "#MAPP001001", function() {
-	
 	CORE.closeLoading();
 });
 

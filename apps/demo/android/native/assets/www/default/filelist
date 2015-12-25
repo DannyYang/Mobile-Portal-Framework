@@ -1,7 +1,9 @@
 /apps/MAPP001001/js/MAPP001001.js
 /apps/MAPP001001/MAPP001001.html
-/apps/MAPP001002/js/MAPP001001.js
+/apps/MAPP001002/js/MAPP001002.js
+/apps/MAPP001002/js/MAPP001002_1.js
 /apps/MAPP001002/MAPP001002.html
+/apps/MAPP001002/MAPP001002_1.html
 /apps/MAPP001070/js/MAPP001070.js
 /apps/MAPP001070/js/MAPP001071.js
 /apps/MAPP001070/MAPP001070.html
@@ -38,7 +40,6 @@
 /js/core/main/IndexApps.html
 /js/core/main/js/IndexApps.js
 /js/core/MPF.core.channel.js
-/js/core/MPF.core.definition.js
 /js/core/MPF.core.js
 /js/core/MPF.core.store.js
 /js/core/MPF.ui.util.js
@@ -68,6 +69,9 @@
 /js/main.js
 /js/messages.js
 /js/plugin/barcodescanner.js
+/templates/converters.js
+/templates/templates.html
+/templates/templates.js
 /worklight/cordova.js
 /worklight/cordova_plugins.js
 /worklight/jsonstore.js

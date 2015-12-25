@@ -34,7 +34,6 @@
 		}
 	});
 	
-	
 	var callNet=function(url,params, options){
 		MPF_LOG.debug("call url: ", url);
 		MPF_LOG.debug("input param: ",JSON.stringify( params));
@@ -54,9 +53,8 @@
 		// 暫時不呼叫ajax，直接呼叫登入成功的function
 		options.success({});
 		// 發送ajax請直接用此
-//		MPF_IO.get(MPF_IO.ajax).send(netOption);
+		// MPF_IO.get(MPF_IO.ajax).send(netOption);
 	};
-	
 	
 	/**
 	 * 功能列表

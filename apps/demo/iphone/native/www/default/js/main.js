@@ -120,17 +120,13 @@ function wlCommonInit(){
 	CORE.loadApps();
 	
 	CORE.loadEnv();
-		
-	// 註冊推播服務
-//	CORE.setPushNotifcation();
-	
+			
 	WL.App.overrideBackButton(CORE.exit);
-	
 	
 	MOBILE_PORTAL.loadDeafultPage();
 	
 //	 SKH_Template.init();
-//	
+	
 	FastClick.attach(document.body);
 	
 	$.mobile.hashListeningEnabled=false;

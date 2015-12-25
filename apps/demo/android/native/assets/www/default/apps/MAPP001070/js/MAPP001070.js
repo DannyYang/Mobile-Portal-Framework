@@ -53,7 +53,7 @@ $(document).on("pagebeforeshow", "#MAPP001070", function() {
 });
 
 $(document).on("pageshow", "#MAPP001070", function() {
-	appNodeFlow.appendNode(MAPP001070);
+	appNodeFlow.nodeInit(MAPP001070);
 	MAPP001070.init();
 });
 

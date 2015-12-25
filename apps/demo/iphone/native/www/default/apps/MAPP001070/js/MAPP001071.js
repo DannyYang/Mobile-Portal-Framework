@@ -26,7 +26,7 @@ var MAPP001071 = {
 })(MAPP001071);
 
 $(document).on("pagebeforeshow", "#MAPP001071", function() {
-	appNodeFlow.appendNode(MAPP001071);
+	appNodeFlow.nodeInit(MAPP001071);
 	CORE.closeLoading();
 });
 
