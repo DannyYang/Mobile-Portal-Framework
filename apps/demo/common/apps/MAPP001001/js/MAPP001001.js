@@ -33,7 +33,11 @@ var MAPP001001 = {
 				MPF_LOG.error("取得GPS資訊失敗:"+fail);
 				m.pointObj.locationDetailContent.html("取得地理位置失敗");
 				CORE.closeLoading();
-			});
+			},{
+	            enableHighAccuracy: false,
+	            timeout: 15000,
+	            maximumAge: 0
+	        });
 		});
 		
 		m.pointObj.showGoogleMapBtn.off().on("click", function(target) {
