@@ -16,7 +16,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" /> 
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	
+	<uses-permission android:name="android.permission.SEND_SMS"/>
+    
     <application android:label="@string/app_name" android:icon="@drawable/icon"> 
         <activity android:name=".demo" android:label="@string/app_name" android:configChanges="orientation|keyboardHidden|screenSize" android:launchMode="singleTask" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:screenOrientation="sensor"> 
             <intent-filter> 
@@ -28,12 +35,24 @@
                 <category android:name="android.intent.category.DEFAULT"/> 
             </intent-filter> 
         </activity>
-        <activity android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden" android:exported="false" android:name="com.google.zxing.client.android.CaptureActivity" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden">
+        <activity
+                android:name="com.google.zxing.client.android.CaptureActivity"
+                android:clearTaskOnLaunch="true"
+                android:configChanges="orientation|keyboardHidden"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:windowSoftInputMode="stateAlwaysHidden"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.zxing.client.android.SCAN"/>
+                    <category android:name="android.intent.category.DEFAULT"/>
+                </intent-filter>
+            </activity>
+    <!-- <activity android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden" android:exported="false" android:name="com.google.zxing.client.android.CaptureActivity" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.phonegap.plugins.barcodescanner.SCAN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>  
+        </activity>  -->
         <!-- Preference Activity  -->  
         <activity android:name="com.worklight.common.WLSettingActivity" android:label="Worklight Settings"></activity>  
         <!-- UI Activity for displaying native dialogs  -->  

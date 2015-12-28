@@ -178,6 +178,7 @@
     </feature>
     
     <feature name="BarcodeScanner">
-        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
-    </feature>
+		<param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
+	</feature>
+   
 </widget>

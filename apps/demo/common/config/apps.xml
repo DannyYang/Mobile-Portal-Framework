@@ -6,6 +6,12 @@
 		<name>我的位置</name>
 		<imgUri>images/a01.png</imgUri>
 	</application>
+	
+    <application>
+		<id>MAPP001003</id>
+		<name>條碼掃描</name>
+		<imgUri>images/a03.png</imgUri>
+	</application>
     	
     <application>
 		<id>MAPP001002</id>
@@ -13,11 +19,7 @@
 		<imgUri>images/a02.png</imgUri>
 	</application>
 	
-    <application>
-		<id>MAPP001003</id>
-		<name>條碼掃描</name>
-		<imgUri>images/a03.png</imgUri>
-	</application>
+    
 	
     <application>
 		<id>MAPP001004</id>
