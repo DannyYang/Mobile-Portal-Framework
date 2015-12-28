@@ -15,13 +15,29 @@ DLJFM = {
 			id : "MAPP001001",
     		path : "apps/MAPP001001/js/MAPP001001.js"
     	},
+    	MAPP001001_1 : {
+			id : "MAPP001001_1",
+    		path : "apps/MAPP001001/js/MAPP001001_1.js"
+    	},
     	MAPP001002 : {
     		id : "MAPP001002",
     		path : "apps/MAPP001002/js/MAPP001002.js"
     	},
-    	MAPP001002_1 : {
-    		id : "MAPP001002_1",
-    		path : "apps/MAPP001002/js/MAPP001002_1.js"
+    	MAPP001003 : {
+    		id : "MAPP001003",
+    		path : "apps/MAPP001003/js/MAPP001003.js"
+    	},
+    	MAPP001003_1 : {
+    		id : "MAPP001003_1",
+    		path : "apps/MAPP001003/js/MAPP001003_1.js"
+    	},
+    	MAPP001004 : {
+    		id : "MAPP001004",
+    		path : "apps/MAPP001004/js/MAPP001004.js"
+    	},
+    	MAPP001005 : {
+    		id : "MAPP001005",
+    		path : "apps/MAPP001005/js/MAPP001005.js"
     	}
     	/* 以下為多重載入的範例 - 以jqplot為例 */
     	/*JQPLOT : {
@@ -65,8 +81,7 @@ DLJFM = {
         			async : false,
         			url: $.MPF.host + jsFileObj.path, 
         			cache:true //加上緩存
-        		}); 
-        			
+        		}); 	
         		$.ajax(options).done($.proxy(function() {
         			if(callback)
         				callback(window[jsFileObj.id]);

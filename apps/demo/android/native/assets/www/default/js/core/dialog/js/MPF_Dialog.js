@@ -32,26 +32,6 @@ var MPF_Dialog={
 		_M.createDialog(msgObj);
 	};
 	
-	_M.drawHighQueueNum = function(ctx, msgNum){
-		ctx.fillStyle = '#D2001C';
-		ctx.beginPath();
-		ctx.arc(25, 15, 10, 0, Math.PI*2, true);
-		ctx.closePath();
-		ctx.fill();
-		ctx.font="bold 14px Arial";
-		ctx.fillStyle = 'white';
-		ctx.textAlign="right";
-		
-		if(msgNum >= 100){
-			ctx.fillText("...", 30.5, 20);
-		}
-		else if(msgNum >= 10){
-			ctx.fillText(msgNum, 32.5, 20);
-		}else{
-			ctx.fillText(msgNum, 28.5, 20);
-		}
-	};
-		
 	_M.createDialog = function(msgObj){
 		var id = "#MPF_Dialog";
 		

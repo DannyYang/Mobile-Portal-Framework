@@ -17,12 +17,11 @@ var MOBILE_PORTAL={
 	 * 系統判斷要導入的畫面.
 	 ******************************************************************************/
 	_MPF.loadDeafultPage=function(){
-		$.MPF.userProfile = true;
-		if($.MPF.userProfile){		
-			if ($.MPF.userProfile.index) {
+		var userProfile = MPF_CACHE.userProfile.getUserProfile();
+		if(userProfile != undefined){		
+			if (userProfile.index != undefined) {
 				try{
 					_MPF.goUserIndex();
-					//INDEX.goIndex();
 				}catch(err){
 					INDEX.goIndex(true);
 				}
@@ -125,7 +124,7 @@ function wlCommonInit(){
 	
 	MOBILE_PORTAL.loadDeafultPage();
 	
-//	 SKH_Template.init();
+	MPF_Template.init();
 	
 	FastClick.attach(document.body);
 	

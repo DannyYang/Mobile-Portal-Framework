@@ -13,11 +13,6 @@ var LOGIN = {
 	// Login程式專用的旗標值, 用以判斷APP是否要關閉．
 	close : false,
 	currentId : 'LoginPage',
-	rememberType : {
-		ALL : 'ALL',
-		IDONLY : 'IDONLY',
-		NONE : 'NONE'
-	},
 	remeber : undefined
 };
 
@@ -41,7 +36,31 @@ var LOGIN = {
 
 	// Call transferdata.AUTH for 驗證
 	_L.login = function(_uid, _pass, _remember, _seccess, _fail) {
-		_seccess();
+		CORE.showLoading('登入中...');
+		console.log("login");
+		MPF_DATA.get(MPF_CHANNEL.auth).call({
+			action : MPF_CHANNEL.auth.action.login,
+			data : {
+				uid:_uid,
+				pass:_pass
+			},
+			success : function(obj){
+				// 呼叫成功
+				console.log(">> s");
+				if(_seccess){
+					CORE.closeLoading();
+					_seccess(obj);
+				}
+			},
+			fail : function(obj){
+				console.log(">> f");
+				// 呼叫失敗
+				CORE.closeLoading();
+				if(_fail){
+					_fail(obj);
+				}
+			}
+		});
 	};
 
 
@@ -75,8 +94,7 @@ var LOGIN = {
 
 			if (!MPF_UTIL.isEmpty(uid) && !MPF_UTIL.isEmpty(pass)) {
 				LOGIN.login(uid, pass, LOGIN.remeber, function(obj) {
-					CORE.setCoreData(uid, pass, "127.0.0.1", "testBody");
-	                // MPF_NOTIFICATION.Register.doRegister();
+					MPF_CACHE.userProfile.saveUserProfile({"account":uid, "password":pass});
 					MOBILE_PORTAL.loadDeafultPage();
 				}, function(obj) {
 					MPF_LOG.trace(JSON.stringify(obj));

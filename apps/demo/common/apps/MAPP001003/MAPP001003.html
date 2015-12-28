@@ -1,0 +1,40 @@
+<div data-role="page" id="MAPP001003">
+	<div data-theme="a" data-role="header" data-position="fixed"
+		data-tap-toggle="false" class="ui-header ui-header-a">
+		<a id="headerFlow" class="ui-btn-left">返回</a>
+		<h1 id="headerTitle">
+			<span>掃描QRCode</span>
+		</h1>
+	</div>
+
+	<div role="main" class="ui-content">
+		<input type="button" id="openQrCodeBtn" value="進行QRCode掃描"></input>
+	
+		<div class="ui-corner-all custom-corners">
+			<div class="ui-bar ui-bar-a">    
+				<h3>掃描結果</h3>
+			</div>
+			<div class="ui-body ui-body-a">
+				<p id="scanResult">你還沒有掃描喔!</p>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li>
+					<a href="#" class="ui-btn-active ui-state-persist">
+						掃描QRCode
+					</a>
+				</li>
+				<li>
+					<a href="#" onclick="MAPP001003.toGeneratorQRCode();">
+						產生QRCode
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+

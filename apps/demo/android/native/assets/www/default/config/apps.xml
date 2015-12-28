@@ -3,19 +3,37 @@
 	
     <application>
 		<id>MAPP001001</id>
-		<name>購物車</name>
+		<name>我的位置</name>
 		<imgUri>images/b01.png</imgUri>
 	</application>
     	
     <application>
-		<id>MAPP001070</id>
-		<name>危機值回覆</name>
+		<id>MAPP001002</id>
+		<name>拍照展示</name>
+		<imgUri>images/b01.png</imgUri>
+	</application>
+	
+    <application>
+		<id>MAPP001003</id>
+		<name>條碼掃描</name>
+		<imgUri>images/b01.png</imgUri>
+	</application>
+	
+    <application>
+		<id>MAPP001004</id>
+		<name>指紋辨識</name>
+		<imgUri>images/b01.png</imgUri>
+	</application>
+	
+    <application>
+		<id>MAPP001005</id>
+		<name>綜合應用</name>
 		<imgUri>images/b01.png</imgUri>
 	</application>
     
     <application>
-		<id>MAPP001002</id>
-		<name>條碼機</name>
+		<id>MAPP001070</id>
+		<name>危機值回覆</name>
 		<imgUri>images/b01.png</imgUri>
 	</application>
    
